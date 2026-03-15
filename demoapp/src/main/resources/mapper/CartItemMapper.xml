@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.example.demoapp.mapper.CartItemMapper">
+
+    <resultMap id="CartItemResultMap" type="org.example.demoapp.entity.CartItem">
+        <id property="id" column="id"/>
+        <result property="cartId" column="cart_id"/>
+        <result property="productId" column="product_id"/>
+        <result property="productTitle" column="product_title"/>
+        <result property="productImageUrl" column="product_image_url"/>
+        <result property="priceAtAdd" column="price_at_add"/>
+        <result property="quantity" column="quantity"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <select id="selectById" resultMap="CartItemResultMap">
+        SELECT * FROM cart_item WHERE id = #{id}
+    </select>
+
+    <select id="selectByCartId" resultMap="CartItemResultMap">
+        SELECT * FROM cart_item WHERE cart_id = #{cartId} ORDER BY create_time DESC
+    </select>
+
+    <select id="selectByCartIdAndProductId" resultMap="CartItemResultMap">
+        SELECT * FROM cart_item
+        WHERE cart_id = #{cartId} AND product_id = #{productId}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO cart_item (
+            cart_id, product_id, product_title, product_image_url,
+            price_at_add, quantity, create_time, update_time
+        ) VALUES (
+            #{cartId}, #{productId}, #{productTitle}, #{productImageUrl},
+            #{priceAtAdd}, #{quantity}, #{createTime}, #{updateTime}
+        )
+    </insert>
+
+    <update id="updateQuantity">
+        UPDATE cart_item
+        SET quantity = #{quantity}, update_time = NOW()
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM cart_item WHERE id = #{id}
+    </delete>
+
+    <delete id="deleteByCartId">
+        DELETE FROM cart_item WHERE cart_id = #{cartId}
+    </delete>
+
+</mapper>

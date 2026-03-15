@@ -1,0 +1,64 @@
+# ================ 后端忽略文件 ================
+# Maven编译输出
+demoapp/target/
+demoapp/*.jar
+demoapp/*.war
+
+# IDE配置文件
+demoapp/.idea/
+demoapp/.settings/
+demoapp/.classpath
+demoapp/.project
+*.iml
+*.iws
+
+# 日志文件
+*.log
+logs/
+
+# ================ 前端忽略文件 ================
+vue-project/node_modules/
+vue-project/dist/
+vue-project/.npm
+vue-project/.yarn
+vue-project/.cache
+
+# 环境变量文件
+vue-project/.env.local
+vue-project/.env.*.local
+
+# 构建输出
+vue-project/build/
+vue-project/.next/
+vue-project/.nuxt/
+
+# ================ 通用忽略 ================
+# 系统文件
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 编辑器文件
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 临时文件
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# 上传的文件目录（运行时生成）
+uploads/
+
+
+# 测试生成的临时文件
+test-output/
+reports/
+
+# Word临时文件
+~$*
+~*.doc
+~*.docx

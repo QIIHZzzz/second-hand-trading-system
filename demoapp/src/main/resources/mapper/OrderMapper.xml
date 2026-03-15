@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.example.demoapp.mapper.OrderMapper">
+
+    <resultMap id="OrderResultMap" type="org.example.demoapp.entity.Order">
+        <id property="id" column="id"/>
+        <result property="orderNumber" column="order_number"/>
+        <result property="buyerId" column="buyer_id"/>
+        <result property="productId" column="product_id"/>
+        <result property="productTitle" column="product_title"/>
+        <result property="productPrice" column="product_price"/>
+        <result property="totalAmount" column="total_amount"/>
+        <result property="status" column="status"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO orders (
+            order_number, buyer_id, product_id, product_title,
+            product_price, total_amount, status, create_time, update_time
+        ) VALUES (
+                     #{orderNumber}, #{buyerId}, #{productId}, #{productTitle},
+                     #{productPrice}, #{totalAmount}, #{status}, #{createTime}, #{updateTime}
+                 )
+    </insert>
+    
+    <select id="selectById" resultMap="OrderResultMap">
+        SELECT * FROM orders WHERE id = #{id}
+    </select>
+
+    <select id="selectByBuyerId" resultMap="OrderResultMap">
+        SELECT * FROM orders
+        WHERE buyer_id = #{buyerId}
+        ORDER BY create_time DESC
+    </select>
+
+    <update id="updateStatus">
+        UPDATE orders
+        SET status = #{status}, update_time = NOW()
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateToPaid">
+        UPDATE orders
+        SET status = 2, update_time = NOW()  <!-- 2代表已支付 -->
+        WHERE id = #{id} AND status = 1      <!-- 只有待支付订单可以支付 -->
+    </update>
+
+</mapper>
